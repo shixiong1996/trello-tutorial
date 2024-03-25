@@ -6,10 +6,10 @@ import localFont from "next/font/local"; // 字体
 import { cn } from "@/lib/utils"; // 合并类
 
 const myFont = localFont({
-  src: "../../public/font/font.woff2",
+  src: "../public/font/font.woff2",
 });
 
-export const Logo = ()=> {
+export const Logo = () => {
   return (
     <Link href="/">
       <div className="hover:opacity-75 transition
@@ -18,12 +18,12 @@ export const Logo = ()=> {
           src="/logo.svg"
           alt="logo"
           height={30}
-          width={50}
+          width={40}
         />
+        <p className={cn("text-lg text-neutral-700 pt-1", myFont.className)}>
+          Taskify
+        </p>
       </div>
-      <p className={cn("text-lg text-neutral-700 pb-1", myFont.className)}>
-        Taskify
-      </p>
     </Link>
   )
 }

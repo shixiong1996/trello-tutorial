@@ -1,3 +1,5 @@
+import { Navbar } from "./_components/navbar"
+
 const MarketingLayout = ({
   children
 }: {
@@ -5,7 +7,7 @@ const MarketingLayout = ({
 }) => {
   return (
     <div className="bg-slate-100 h-full">
-      {/* Navbar */}
+      <Navbar />
       <main className="bg-slate-100 pt-40 pb-20">
         {children}
       </main>
