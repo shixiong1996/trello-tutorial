@@ -1,11 +1,11 @@
 // Clerk身份验证添加到您的应用程序
-
+// publicRoutes: ['/'] 可访问目录
 import { authMiddleware } from "@clerk/nextjs";
  
 // See https://clerk.com/docs/references/nextjs/auth-middleware
 // for more information about configuring your Middleware
 export default authMiddleware({
-  publicRoutes: ['/']
+  publicRoutes: ['/'],
 });
 
 export const config = {
