@@ -1,14 +1,17 @@
 // 客户端组件
-'use client';
+'use client'
 
-// 身份验证状态
-import { useAuth } from "@clerk/nextjs"
+import { useAuth, useUser } from "@clerk/nextjs"
+
 
 const ProtectedPage = () => {
-  const {} = useAuth()
+  const { userId } = useAuth()
+  const { user } = useUser()
 
   return (
     <div>
+      User: {user?.firstName}
+      userId: {userId}
     </div>
   )
 }

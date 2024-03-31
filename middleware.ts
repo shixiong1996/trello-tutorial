@@ -1,5 +1,5 @@
 // Clerk身份验证添加到您的应用程序
-// publicRoutes: ['/'] 可访问目录
+// publicRoutes: ['/'] 设置为公共路线以免进入3000地址就访问
 import { authMiddleware } from "@clerk/nextjs";
  
 // See https://clerk.com/docs/references/nextjs/auth-middleware
