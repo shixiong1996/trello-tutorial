@@ -10,7 +10,7 @@ export const Navbar = () => {
           <Logo />
         </div>
         <Button size="sm" className="rounded-sm hidden md:block h-auto py-1.5 px-2">
-          Create
+          Create1
         </Button>
       </div>
     </div>
