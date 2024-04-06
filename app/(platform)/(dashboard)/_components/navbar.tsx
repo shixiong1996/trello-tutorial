@@ -15,7 +15,7 @@ export const Navbar = () => {
           Create1
         </Button>
         <Button size="sm" className="rounded-sm block md:hidd">
-          <Plus/>
+          <Plus className="h-5 w-5" />
         </Button>
       </div>
     </div>
