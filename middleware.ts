@@ -1,6 +1,6 @@
 // Clerk身份验证添加到您的应用程序
 // publicRoutes: ['/'] 设置为公共路线以免进入3000地址就访问
-import { authMiddleware } from "@clerk/nextjs";
+import { authMiddleware, redirectToSignIn } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
  
 // See https://clerk.com/docs/references/nextjs/auth-middleware
@@ -8,12 +8,22 @@ import { NextResponse } from "next/server";
 export default authMiddleware({
   publicRoutes: ['/'],
   afterAuth(auth, req) {
+    // 处理未通过验证的用户
     if(auth.userId && auth.isPublicRoute) {
       let path = '/select-org'
       
       if(auth.orgId) {
         path = `/organization/${auth.orgId}`
       }
+      const orgSelection = new URL(path, req.url);
+      return NextResponse.redirect(orgSelection);
+    }
+
+    if (!auth.userId && !auth.isPublicRoute) {
+      return redirectToSignIn({ returnBackUrl: req.url });
+    }
+
+    if (auth.userId && !auth.orgId && req.nextUrl.pathname !== "/org-selection") {
       const orgSelection = new URL("/org-selection", req.url);
       return NextResponse.redirect(orgSelection);
     }
