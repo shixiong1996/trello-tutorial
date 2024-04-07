@@ -1,11 +1,23 @@
 // Clerk身份验证添加到您的应用程序
 // publicRoutes: ['/'] 设置为公共路线以免进入3000地址就访问
 import { authMiddleware } from "@clerk/nextjs";
+import { NextResponse } from "next/server";
  
 // See https://clerk.com/docs/references/nextjs/auth-middleware
 // for more information about configuring your Middleware
 export default authMiddleware({
   publicRoutes: ['/'],
+  afterAuth(auth, req) {
+    if(auth.userId && auth.isPublicRoute) {
+      let path = '/select-org'
+      
+      if(auth.orgId) {
+        path = `/organization/${auth.orgId}`
+      }
+      const orgSelection = new URL("/org-selection", req.url);
+      return NextResponse.redirect(orgSelection);
+    }
+  }
 });
 
 export const config = {
