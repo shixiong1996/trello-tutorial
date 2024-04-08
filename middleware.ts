@@ -8,13 +8,14 @@ import { NextResponse } from "next/server";
 export default authMiddleware({
   publicRoutes: ['/'],
   afterAuth(auth, req) {
-    // 处理未通过验证的用户
-    if(auth.userId && auth.isPublicRoute) {
-      let path = '/select-org'
-      
-      if(auth.orgId) {
-        path = `/organization/${auth.orgId}`
+    // 处理未通过的代码
+    if (auth.userId && auth.isPublicRoute) {
+      let path = "/select-org";
+
+      if (auth.orgId) {
+        path = `/organization/${auth.orgId}`;
       }
+
       const orgSelection = new URL(path, req.url);
       return NextResponse.redirect(orgSelection);
     }
@@ -23,8 +24,8 @@ export default authMiddleware({
       return redirectToSignIn({ returnBackUrl: req.url });
     }
 
-    if (auth.userId && !auth.orgId && req.nextUrl.pathname !== "/org-selection") {
-      const orgSelection = new URL("/org-selection", req.url);
+    if (auth.userId && !auth.orgId && req.nextUrl.pathname !== "/select-org") {
+      const orgSelection = new URL("/select-org", req.url);
       return NextResponse.redirect(orgSelection);
     }
   }

@@ -3,10 +3,10 @@ import { OrganizationList } from "@clerk/nextjs";
 
 export default function CreateOrganizationPage() {
   return (
-    <OrganizationList 
+    <OrganizationList
       hidePersonal
-      afterCreateOrganizationUrl='/organization/:id'
-      afterSelectOrganizationUrl='/organization/:id'
+      afterSelectOrganizationUrl="/organization/:id"
+      afterCreateOrganizationUrl="/organization/:id"
     />
-  )
-}
+  );
+};
