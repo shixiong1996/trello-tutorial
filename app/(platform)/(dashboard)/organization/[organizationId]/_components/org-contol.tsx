@@ -13,7 +13,7 @@ export const OrgContol = () => {
 
   useEffect(() => {
     // 确保setActive函数确实被提供，防止在调用未定义或非函数值时抛出错误
-    if(!setActive) return
+    if (!setActive) return
 
     setActive({
       organization: params.organizationId as string
@@ -22,7 +22,7 @@ export const OrgContol = () => {
 
   return (
     <div>
-      
+      111
     </div>
   )
 }
