@@ -37,7 +37,7 @@ export const Sidebar = ({
   // isLoaded 在 Clerk 加载并初始化之前，布尔值将设置为 false。一旦 Clerk 加载，isLoaded 将被设置为 true。
   const {
     userMemberships,
-    isLoaded: isLoadList
+    isLoaded: isLoadedOrgList
   } = useOrganizationList({
     // 分页数据来实现无限滚动列表
     userMemberships: {
@@ -62,7 +62,14 @@ export const Sidebar = ({
     }))
   }
 
-  // 加载状态
+  // 手风琴加载状态
+  if(!isLoadedOrg || !isLoadedOrgList || userMemberships.isLoading) {
+    return (
+      <>
+        <Skeleton />
+      </>
+    )
+  }
 
   return (
     <div>
