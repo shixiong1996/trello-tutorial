@@ -2,7 +2,7 @@
 // publicRoutes: ['/'] 设置为公共路线以免进入3000地址就访问
 import { authMiddleware, redirectToSignIn } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
- 
+
 // See https://clerk.com/docs/references/nextjs/auth-middleware
 // for more information about configuring your Middleware
 export default authMiddleware({
