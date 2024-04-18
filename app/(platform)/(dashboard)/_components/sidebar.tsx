@@ -1,11 +1,11 @@
 // 客户端组件
 'use client'
 
-import Link from "next/link"
-import { Plus } from "lucide-react"
+import Link from "next/link" // 客户端导航
+import { Plus } from "lucide-react" 
 // 将 React 的状态管理与浏览器的本地存储 API 结合起来。使用这个钩子可以使得在应用中保存和检索数据变得更简单且更符合 React 的工作流程。
 import { useLocalStorage } from "usehooks-ts"
-// 使用组织
+// 获取当前组织信息和组织列表
 import { useOrganization, useOrganizationList } from "@clerk/nextjs"
 
 import { Button } from "@/components/ui/button"
