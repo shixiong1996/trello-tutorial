@@ -2,8 +2,6 @@
 
 export const NavItem = () => {
   return (
-    <div>
-      
-    </div>
+    <div>NavItem</div>
   )
 }
