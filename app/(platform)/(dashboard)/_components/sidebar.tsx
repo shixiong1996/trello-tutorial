@@ -13,7 +13,8 @@ import { Separator } from "@/components/ui/separator"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Accordion } from "@/components/ui/accordion"
 
-import { NavItem } from "./nav-item"
+import { NavItem, Organization } from "./nav-item"
+import { organizations } from "@clerk/nextjs/api"
 
 interface SidebarProps {
   storageKey?: string
@@ -109,7 +110,7 @@ export const Sidebar = ({
             key={organization.id}
             isActive={activeOrganization?.id === organization.id}
             isExpanded={expanded[organization.id]}
-            organization={organization}
+            organization={organization as Organization}
             onExpand={onExpand}
           />
         ))}

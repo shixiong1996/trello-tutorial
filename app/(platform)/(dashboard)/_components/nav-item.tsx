@@ -1,8 +1,11 @@
 'use client'
 
-type organization = {
+import { AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { cn } from "@/lib/utils";
+
+export type Organization = {
   id: string
-  sulg: string
+  slug: string
   imageUrl: string
   name: string
 }
@@ -10,12 +13,31 @@ type organization = {
 interface NavItemProps {
   isExpanded: boolean
   isActive: boolean
-  organizationId: organization
+  organization: Organization
   onExpand: (id: string) => void
 }
 
-export const NavItem = () => {
+export const NavItem = ({
+  isExpanded,
+  isActive,
+  organization,
+  onExpand
+}:
+  NavItemProps
+) => {
   return (
-    <div>NavItem</div>
+    <AccordionItem value={organization.id} className="border-none">
+      <AccordionTrigger
+        onClick={() => onExpand(organization.id)}
+        className={cn(
+          "flex items-center gap-x-2 p-1.5 text-neutral-700 rounded-md hover:bg-neutral-500/10 transition text-start no-underline hover:no-underline",
+          isActive && !isExpanded && "bg-sky-500/10 text-sky-700"
+        )}
+      >
+        <div>
+          
+        </div>
+      </AccordionTrigger>
+    </AccordionItem>
   )
 }
