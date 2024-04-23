@@ -1,7 +1,11 @@
 'use client'
 
+import { useRouter, usePathname} from "next/navigation";
+import Image from "next/image"
+import { Activity, CreditCard, Layout, Settings } from "lucide-react";
 import { AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { cn } from "@/lib/utils";
+import { use } from "react";
 
 export type Organization = {
   id: string
@@ -25,6 +29,32 @@ export const NavItem = ({
 }:
   NavItemProps
 ) => {
+  const router = useRouter()
+  const pathname = usePathname()
+
+  const routes = [
+    {
+      label: "Boards",
+      icon: <Layout className="h-4 w-4 mr-2" />,
+      href: `/organization/${organization.id}`,
+    },
+    {
+      label: "Activity",
+      icon: <Activity className="h-4 w-4 mr-2" />,
+      href: `/organization/${organization.id}/activity`,
+    },
+    {
+      label: "Settings",
+      icon: <Settings className="h-4 w-4 mr-2" />,
+      href: `/organization/${organization.id}/settings`,
+    },
+    {
+      label: "Billing",
+      icon: <CreditCard className="h-4 w-4 mr-2" />,
+      href: `/organization/${organization.id}/billing`,
+    },
+  ];
+
   return (
     <AccordionItem value={organization.id} className="border-none">
       <AccordionTrigger
@@ -34,8 +64,16 @@ export const NavItem = ({
           isActive && !isExpanded && "bg-sky-500/10 text-sky-700"
         )}
       >
-        <div>
-          
+        <div className="flex items-center gap-x-2">
+          <div className="w-7 h-7 relative">
+            <Image
+              fill
+              src={organization.imageUrl}
+              alt="Organization"
+              className="rounded-sm object-cover"
+            />
+            <span className="font-medium text-sm">{organization.name}</span>
+          </div>
         </div>
       </AccordionTrigger>
     </AccordionItem>
