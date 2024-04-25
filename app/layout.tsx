@@ -6,7 +6,8 @@ import { siteConfig } from "@/config/site";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = { // 元数据 网站的标题 图标等
+// 元数据可帮助搜索引擎更好地了解您的内容（这可以带来更好的 SEO），并允许您自定义您的内容在社交媒体上的呈现方式，帮助您在各种平台上创建更具吸引力和一致的用户体验。
+export const metadata: Metadata = {
   title: {
     default: siteConfig.name, //默认标题
     template: `%s | ${siteConfig.name}` // api生成原数据
