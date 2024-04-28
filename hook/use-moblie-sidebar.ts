@@ -12,4 +12,3 @@ export const useMoblieSidebar = create<MoblieSidebarStore>((set) => ({
   onOpen: () => set({ isOpen: true }),
   onClose: () => set({ isOpen: false }),
 }))
-
