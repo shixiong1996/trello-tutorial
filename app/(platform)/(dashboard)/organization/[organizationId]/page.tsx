@@ -1,11 +1,16 @@
-'use client';
-
 const OrganizationIdPage = () => {
-  
+  console.log('i am logged in the browser')
+  async function create(formData: FormData) {
+    'use server'
+
+    const title = formData.get('title') as string
+
+    
+  }
 
   return (
     <div>
-      <form action="">
+      <form action={create}>
         <input
           id="title"
           name="title"
