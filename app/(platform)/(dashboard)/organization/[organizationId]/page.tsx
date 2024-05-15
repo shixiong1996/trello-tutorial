@@ -1,11 +1,18 @@
+import { db } from "@/lib/db";
+
 const OrganizationIdPage = () => {
-  console.log('i am logged in the browser')
   async function create(formData: FormData) {
     'use server'
 
+    // 获取组织 ID
     const title = formData.get('title') as string
 
-    
+    // 创建一个新的 board
+    db.board.create ({
+      data: {
+        title: title,
+      }
+    })
   }
 
   return (
