@@ -8,7 +8,7 @@ const OrganizationIdPage = () => {
     const title = formData.get('title') as string
 
     // 创建一个新的 board
-    db.board.create ({
+    await db.board.create ({
       data: {
         title: title,
       }
