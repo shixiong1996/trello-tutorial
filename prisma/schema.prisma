@@ -1,15 +1,12 @@
-// 数据源
 generator client {
   provider = "prisma-client-js"
 }
 
-// 生成器
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
-// 数据模型
 model board {
   id    String @id @db.VarChar(36)
   title String @db.VarChar(255)
