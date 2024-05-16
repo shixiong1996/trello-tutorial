@@ -4,7 +4,7 @@ const OrganizationIdPage = () => {
   async function create(formData: FormData) {
     'use server'
 
-    // 获取组织 ID
+    // 获取表单中名为 title 的输入框的值
     const title = formData.get('title') as string
 
     // 创建一个新的 board
