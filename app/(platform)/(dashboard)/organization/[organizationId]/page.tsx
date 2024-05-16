@@ -1,20 +1,7 @@
-import { db } from "@/lib/db";
+import { create } from "@/action/create-board";
+import { Button } from "@/components/ui/button";
 
 const OrganizationIdPage = () => {
-  async function create(formData: FormData) {
-    'use server'
-
-    // 获取表单中名为 title 的输入框的值
-    const title = formData.get('title') as string
-
-    // 创建一个新的 board
-    await db.board.create ({
-      data: {
-        title: title,
-      }
-    })
-  }
-
   return (
     <div>
       <form action={create}>
@@ -25,6 +12,9 @@ const OrganizationIdPage = () => {
           placeholder="Enter a board title"
           className="border-black border p-1"
         />
+        <Button type="submit">
+          提交
+        </Button>
       </form>
     </div>
   );
