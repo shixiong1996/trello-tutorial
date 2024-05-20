@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from 'zod';
 
+// 定义可选属性 作用于错误提示
 export type State = {
   error?: {
     title?: string[]
@@ -12,19 +13,21 @@ export type State = {
   message?: string | null
 }
 
-// 定义表单的数据结构
+// 验证表单的数据结构 传递附加参数 提示错误信息
 const createBoard = z.object({
   title: z.string().min(3, {
     message: "最少3个字符"
   }),
 });
 
+// 
 export async function create(prevState: State, formData: FormData) {
-  // 
+  // 解析表单数据
   const validatedFields = createBoard.safeParse({
     title: formData.get('title')
   })
 
+  // 如果验证失败 返回错误信息
   if(!validatedFields.success) {
     return {
       error: validatedFields.error.flatten().fieldErrors,
@@ -49,7 +52,8 @@ export async function create(prevState: State, formData: FormData) {
     }
   }
   
-  // 重定向 重新验证路径 更新页面
+  // 重新验证路径 更新页面
   revalidatePath('/organization/org_2ep4r2hELm4l6KrwKEe8gxz3aqQ');
+  // 重定向
   redirect('/organization/org_2ep4r2hELm4l6KrwKEe8gxz3aqQ')
 }
