@@ -20,7 +20,7 @@ const createBoard = z.object({
   }),
 });
 
-// 
+// 创建board执行函数
 export async function create(prevState: State, formData: FormData) {
   // 解析表单数据
   const validatedFields = createBoard.safeParse({
@@ -30,14 +30,16 @@ export async function create(prevState: State, formData: FormData) {
   // 如果验证失败 返回错误信息
   if(!validatedFields.success) {
     return {
+      // 返回展品化的错误信息 zod库参考https://zod.dev/ERROR_HANDLING?id=flattening-errors
       error: validatedFields.error.flatten().fieldErrors,
       menubar: "请检查表单字段"
     }
   }
- 
-  const { title } = validatedFields.data
+  
+  // 解析表单数据验证成功的数据
+  const { title } = validatedFields.data;
 
-  // 创建一个新的 board
+  // 创建board
   try {
     await db.board.create({
       data: {
