@@ -7,7 +7,7 @@ import { z } from 'zod';
 
 // 定义可选属性 作用于错误提示
 export type State = {
-  error?: {
+  errors?: {
     title?: string[]
   },
   message?: string | null
@@ -31,7 +31,7 @@ export async function create(prevState: State, formData: FormData) {
   if(!validatedFields.success) {
     return {
       // 返回展品化的错误信息 zod库参考https://zod.dev/ERROR_HANDLING?id=flattening-errors
-      error: validatedFields.error.flatten().fieldErrors,
+      errors: validatedFields.error.flatten().fieldErrors,
       message: "请检查表单字段"
     }
   }
