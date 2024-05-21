@@ -32,7 +32,7 @@ export async function create(prevState: State, formData: FormData) {
     return {
       // 返回展品化的错误信息 zod库参考https://zod.dev/ERROR_HANDLING?id=flattening-errors
       error: validatedFields.error.flatten().fieldErrors,
-      menubar: "请检查表单字段"
+      message: "请检查表单字段"
     }
   }
   
