@@ -30,7 +30,7 @@ export async function create(prevState: State, formData: FormData) {
   // 如果验证失败 返回错误信息
   if(!validatedFields.success) {
     return {
-      // 返回展品化的错误信息 zod库参考https://zod.dev/ERROR_HANDLING?id=flattening-errors
+      // 返回展平化的错误信息 zod库参考https://zod.dev/ERROR_HANDLING?id=flattening-errors
       errors: validatedFields.error.flatten().fieldErrors,
       message: "请检查表单字段"
     }
