@@ -14,14 +14,14 @@ export type State = {
 }
 
 // 验证表单的数据结构 传递附加参数 提示错误信息
-const CreateBoard = z.object({
+export const CreateBoard = z.object({
   title: z.string().min(3, {
     message: "最少3个字符"
   }),
 });
 
 // 创建board执行函数
-export async function create(prevState: State, formData: FormData) {
+export async function createBoard(prevState: State, formData: FormData) {
   // 解析表单数据
   const validatedFields = CreateBoard.safeParse({
     title: formData.get('title')
