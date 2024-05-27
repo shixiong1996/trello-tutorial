@@ -1,4 +1,4 @@
-// 处理创建看板的请求
+// 处理创建看板的
 'use server'
 
 import { auth } from '@clerk/nextjs'

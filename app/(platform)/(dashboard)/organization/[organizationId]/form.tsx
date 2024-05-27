@@ -1,11 +1,11 @@
 'use client';
 
-import { createBoard } from "@/action/create-board";
+import { createBoard } from "@/action/create-board/index";
 
 // import { useFormState } from "react-dom";
 import { FormInput } from "./form-input";
 import { FormButton } from "./form-button";
-import { useAction } from "@/hook/use-action";
+import { UseAction } from "@/hook/use-action";
 
 export const Form = () => {
   // const initialState = { message: "", errors: {} }
@@ -15,7 +15,7 @@ export const Form = () => {
   // 根据 create 函数的执行结果（比如成功、失败或错误信息的返回），state 会相应更新，以反映当前表单的状态，这包括显示错误或提交成功的消息。
   // const [state, dispatch] = useFormState(create, initialState)
 
-  const { execute, fieldErrors } = useAction(createBoard, {
+  const { execute, fieldErrors } = UseAction(createBoard, {
     onSuccess: (data) => {
       console.log(data, 'success')
     },
@@ -24,13 +24,10 @@ export const Form = () => {
     }
   })
 
-  const onSubmit = (formData: FormData) => { 
+  const onSubmit = (formData: FormData) => {
     const title = formData.get('title') as string
-
     execute({ title })
   }
-
-
 
   return (
     <form action={onSubmit}>

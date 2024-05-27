@@ -1,26 +1,32 @@
-// 安全操作处理器
-import { z } from "zod";
+/*
+ * @Author: Victor
+ * @Date: 2024-03-12 13:39:52
+ * @LastEditTime: 2024-03-12 14:20:13
+ */
+
+
+import { z } from 'zod'
 
 export type FieldErrors<T> = {
-  [key in keyof T]?: string[];
-};
-
-export type ActionState<TInput, TOutput> = {
-  fieldError?: FieldErrors<TInput>;
-  error?: string | null;
-  data?: TOutput;
+	[K in keyof T]?: string[]
 }
 
-export const createSafeAction = <TInput, TOutput>(
-  schema: z.Schema<TInput>,
-  handler: (validateData: TInput) => Promise<ActionState<TInput, TOutput>>
-) => {
-  return async (data: TInput): Promise<ActionState<TInput, TOutput>> => {
-    const validateData = schema.safeParse(data);
-    if(!validateData.success) {
-      return { fieldError: validateData.error.flatten().fieldErrors as FieldErrors<TInput> };
-    }
+export type ActionState<TInput, TOutput> = {
+	fieldErrors?: FieldErrors<TInput>,
+	error?: string | null,
+	data?: TOutput
+}
 
-    return handler(validateData.data);
-  }
+export const createSafeAction = <TInput, TOutput>(schema: z.Schema<TInput>, handler: (validatedDate: TInput) => Promise<ActionState<TInput, TOutput>>) => {
+	return async (data: TInput): Promise<ActionState<TInput, TOutput>> => {
+		const validationResult = schema.safeParse(data)
+
+		if (!validationResult.success) {
+			return {
+				fieldErrors: validationResult.error.flatten().fieldErrors as FieldErrors<TInput>,
+			}
+		}
+
+		return handler(validationResult.data)
+	}
 }
