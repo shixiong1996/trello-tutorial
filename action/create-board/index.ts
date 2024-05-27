@@ -1,3 +1,4 @@
+// 处理创建看板的请求
 'use server'
 
 import { auth } from '@clerk/nextjs'
@@ -21,6 +22,7 @@ const handler = async ( data: InputType ): Promise<ReturnType> => {
   let board;
 
   try {
+    throw new Error('测试')
     board = await db.board.create({
       data: {
         title,
