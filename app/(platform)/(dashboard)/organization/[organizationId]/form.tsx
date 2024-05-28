@@ -1,6 +1,6 @@
 'use client';
 
-import { createBoard } from "@/action/create-board";
+import { createBoard } from "@/action/create-board/index";
 
 // import { useFormState } from "react-dom";
 import { FormInput } from "./form-input";
