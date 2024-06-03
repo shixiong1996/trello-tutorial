@@ -1,9 +1,4 @@
-/*
- * @Author: Victor
- * @Date: 2024-03-12 13:39:52
- * @LastEditTime: 2024-03-12 14:20:13
- */
-
+// 安全操作处理程序函数
 
 import { z } from 'zod'
 
@@ -17,7 +12,8 @@ export type ActionState<TInput, TOutput> = {
 	data?: TOutput
 }
 
-export const createSafeAction = <TInput, TOutput>(schema: z.Schema<TInput>, handler: (validatedDate: TInput) => Promise<ActionState<TInput, TOutput>>) => {
+export const createSafeAction = <TInput, TOutput>(schema: z.Schema<TInput>, 
+	handler: (validatedDate: TInput) => Promise<ActionState<TInput, TOutput>>) => {
 	return async (data: TInput): Promise<ActionState<TInput, TOutput>> => {
 		const validationResult = schema.safeParse(data)
 
