@@ -35,8 +35,11 @@ export type ActionState<TInput, TOutput> = {
 // 	data: { id: 1, username: 'admin', email: 'admin@com' }
 // }
 
-export const createSafeAction = <TInput, TOutput>(schema: z.Schema<TInput>,
-	handler: (validatedDate: TInput) => Promise<ActionState<TInput, TOutput>>) => {
+// 创建一个安全操作的函数
+export const createSafeAction = <TInput, TOutput>(
+	schema: z.Schema<TInput>,
+	handler: (validatedDate: TInput) => Promise<ActionState<TInput, TOutput>>
+) => {
 	return async (data: TInput): Promise<ActionState<TInput, TOutput>> => {
 		const validationResult = schema.safeParse(data)
 
