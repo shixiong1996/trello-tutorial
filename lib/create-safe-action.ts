@@ -22,7 +22,7 @@ export type FieldErrors<T> = {
 export type ActionState<TInput, TOutput> = {
 	fieldErrors?: FieldErrors<TInput>, // 存储与 TInput 类型字段相关的错误信息
 	error?: string | null,  // 存储错误信息
-	data?: TOutput // 存储处理后的数据
+	data?: TOutput  // 存储处理后的数据
 }
 
 // 假设以下数据类型符合ActionState的类型
@@ -37,18 +37,24 @@ export type ActionState<TInput, TOutput> = {
 
 // 创建一个安全操作的函数
 export const createSafeAction = <TInput, TOutput>(
-	schema: z.Schema<TInput>,
+	schema: z.Schema<TInput>, // Zod 模式，提取出推断的类型
+	// 这是一个处理函数，接受验证后的数据，返回一个包含操作状态的Promise
 	handler: (validatedDate: TInput) => Promise<ActionState<TInput, TOutput>>
 ) => {
+	// 返回一个异步函数，该函数接受输入数据并返回一个包含操作状态的Promise
 	return async (data: TInput): Promise<ActionState<TInput, TOutput>> => {
-		const validationResult = schema.safeParse(data)
+		const validationResult = schema.safeParse(data) // 使用 Zod 的 safeParse 方法对传入的数据进行验证。
 
-		if (!validationResult.success) {
+		// 处理验证失败的情况
+		if (!validationResult.success) { // 如果验证失败
 			return {
+				// 返回展平化的错误信息 zod库参考https://zod.dev/ERROR_HANDLING?id=flattening-errors
+				// 获取字段错误，并将其转换为 FieldErrors<TInput> 类型。
 				fieldErrors: validationResult.error.flatten().fieldErrors as FieldErrors<TInput>,
 			}
 		}
-
+		
+		// 如果验证成功，调用处理函数handler并传递验证后的数据
 		return handler(validationResult.data)
 	}
 }
