@@ -3,8 +3,8 @@ import { useState, useCallback } from 'react';
 import { ActionState, FieldErrors } from '@/lib/create-safe-action';
 import { set } from 'zod';
 
-type Action<TInput, TOutput> = (data: TInput) => 
-Promise<ActionState<TInput, TOutput>>;
+type Action<TInput, TOutput> = (data: TInput) =>
+  Promise<ActionState<TInput, TOutput>>;
 
 interface UseActionOptions<TOutput> {
   onSuccess?: (data: TOutput) => void;
@@ -24,10 +24,10 @@ export const UseAction = <TInput, TOutput>(
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const execute = useCallback(
-    async (Input: TInput) => {
+    async (input: TInput) => {
       setIsLoading(true)
       try {
-        const result = await action(Input);
+        const result = await action(input);
 
         if (!result) {
           return;
