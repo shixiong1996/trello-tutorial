@@ -3,12 +3,13 @@ import { useState, useCallback } from 'react';
 import { ActionState, FieldErrors } from '@/lib/create-safe-action';
 import { set } from 'zod';
 
-type Action<TInput, TOutput> = (data: TInput) => Promise<ActionState<TInput, TOutput>>;
+type Action<TInput, TOutput> = (data: TInput) => 
+Promise<ActionState<TInput, TOutput>>;
 
 interface UseActionOptions<TOutput> {
   onSuccess?: (data: TOutput) => void;
   onError?: (error: string) => void;
-  onCompleted?: () => void;
+  onComplete?: () => void;
 }
 
 export const UseAction = <TInput, TOutput>(
@@ -47,7 +48,7 @@ export const UseAction = <TInput, TOutput>(
         }
       } finally {
         setIsLoading(false)
-        options.onCompleted?.()
+        options.onComplete?.()
       }
     },
     [action, options]
