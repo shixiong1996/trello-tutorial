@@ -1,7 +1,6 @@
 import { useState, useCallback } from 'react';
 
 import { ActionState, FieldErrors } from '@/lib/create-safe-action';
-import { set } from 'zod';
 
 type Action<TInput, TOutput> = (data: TInput) =>
   Promise<ActionState<TInput, TOutput>>;
@@ -12,7 +11,7 @@ interface UseActionOptions<TOutput> {
   onComplete?: () => void;
 }
 
-export const UseAction = <TInput, TOutput>(
+export const useAction = <TInput, TOutput>(
   action: Action<TInput, TOutput>,
   options: UseActionOptions<TOutput> = {}
 ) => {
@@ -54,10 +53,10 @@ export const UseAction = <TInput, TOutput>(
     [action, options]
   )
   return {
+    execute,
     fieldErrors,
     error,
     data,
-    isLoading,
-    execute
+    isLoading
   }
 }
