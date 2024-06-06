@@ -1,19 +1,20 @@
-import { auth } from "@clerk/nextjs"
-import { revalidatePath } from "next/cache"
+// 处理创建看板的
+'use server'
 
-import { db } from "@/lib/db"
+import { auth } from '@clerk/nextjs'
 
-import { InputType, ReturnType } from "./types"
-import { createSafeAction } from "@/lib/create-safe-action"
-import { CreateBoard } from "./schema"
+import { createSafeAction } from '@/lib/create-safe-action'
 
-const handler = async (data:InputType): Promise<ReturnType> => {
+import { InputType, ReturnType } from './types'
+import { db } from '@/lib/db'
+import { revalidatePath } from 'next/cache'
+import { CreateBoard } from "./schema";
+
+const handler = async ( data: InputType ): Promise<ReturnType> => {
   const { userId } = auth()
 
   if(!userId) {
-    return {
-      error: "未授权"
-    }
+    return { error: '未授权' }
   }
 
   const { title } = data
@@ -21,19 +22,17 @@ const handler = async (data:InputType): Promise<ReturnType> => {
   let board;
 
   try {
-    throw new Error("未实现")
+    // throw new Error('测试')
     board = await db.board.create({
       data: {
         title,
       }
     })
   } catch (error) {
-    return {
-      error: "创建失败"
-    }
+    return { error: '创建失败' }
   }
 
-  revalidatePath("/board/${board.id}")
+  revalidatePath('/board/${board.id}')
   return { data: board }
 }
 
