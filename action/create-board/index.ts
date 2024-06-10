@@ -4,11 +4,11 @@
 import { auth } from '@clerk/nextjs'
 
 import { createSafeAction } from '@/lib/create-safe-action'
-
-import { InputType, ReturnType } from './types'
+import { InputType, ReturnType } from './types' // 输入数据和返回数据的类型。
 import { db } from '@/lib/db'
-import { revalidatePath } from 'next/cache'
-import { CreateBoard } from "./schema";
+
+import { revalidatePath } from 'next/cache' // 重新验证某个路径的数据缓存
+import { CreateBoard } from "./schema"; // 引入数据验证模式
 
 const handler = async ( data: InputType ): Promise<ReturnType> => {
   const { userId } = auth()
