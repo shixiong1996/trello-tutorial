@@ -1,3 +1,5 @@
+// 处理异步操作，并管理操作的状态和错误处理。
+
 import { useState, useCallback } from 'react';
 
 import { ActionState, FieldErrors } from '@/lib/create-safe-action';
@@ -5,6 +7,7 @@ import { ActionState, FieldErrors } from '@/lib/create-safe-action';
 type Action<TInput, TOutput> = (data: TInput) =>
   Promise<ActionState<TInput, TOutput>>;
 
+// 三个可选的回调函数，分别在操作成功、失败和完成时调用。
 interface UseActionOptions<TOutput> {
   onSuccess?: (data: TOutput) => void;
   onError?: (error: string) => void;
@@ -17,10 +20,10 @@ export const useAction = <TInput, TOutput>(
 ) => {
   const [fieldErrors, setFieldErrors] = useState<FieldErrors<TInput> | undefined>(
     undefined
-  );
-  const [error, setError] = useState<string | undefined>(undefined)
-  const [data, setData] = useState<TOutput | undefined>(undefined)
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  ); // 存储字段错误信息
+  const [error, setError] = useState<string | undefined>(undefined) // 存储操作过程中发生的错误信息
+  const [data, setData] = useState<TOutput | undefined>(undefined) // 存储操作成功时返回的数据
+  const [isLoading, setIsLoading] = useState<boolean>(false) // 操作是否正在进行
 
   const execute = useCallback(
     async (input: TInput) => {
