@@ -2,7 +2,6 @@
 
 import { createBoard } from "@/action/create-board/index";
 
-// import { useFormState } from "react-dom";
 import { FormInput } from "./form-input";
 import { FormButton } from "./form-button";
 import { useAction } from "@/hook/use-action";
