@@ -1,10 +1,13 @@
+// 提交表单 用于创建一个新的board
+
 'use client';
 
-import { createBoard } from "@/action/create-board/index";
+import { createBoard } from "@/action/create-board/index"; // 创建看板
 
 import { FormInput } from "./form-input";
 import { FormButton } from "./form-button";
-import { useAction } from "@/hook/use-action";
+
+import { useAction } from "@/hook/use-action"; // 处理异步操作，并管理操作的状态和错误处理。
 
 export const Form = () => {
   const { execute, fieldErrors } = useAction(createBoard, {
