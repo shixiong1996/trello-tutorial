@@ -10,10 +10,6 @@ export type FieldErrors<T> = {
 }
 
 // 假设以下数据类型符合fireldErrors的类型
-// FormFields : {
-// 	username: string
-// 	password: string
-// }
 // const formFiledErrors: FieldErrors<FormFields> = {
 // 	username: ['用户名不能为空'],
 // 	password: ['密码不能为空']
