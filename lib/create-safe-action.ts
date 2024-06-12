@@ -37,7 +37,7 @@ export type ActionState<TInput, TOutput> = {
 
 // 创建一个安全操作的函数
 export const createSafeAction = <TInput, TOutput>(
-	schema: z.Schema<TInput>, // Zod 模式，提取出推断的类型
+	schema: z.Schema<TInput>, // 这是一个 Zod 的验证模式
 	// 这是一个处理函数，接受验证后的数据，返回一个包含操作状态的Promise
 	handler: (validatedDate: TInput) => Promise<ActionState<TInput, TOutput>>
 ) => {
