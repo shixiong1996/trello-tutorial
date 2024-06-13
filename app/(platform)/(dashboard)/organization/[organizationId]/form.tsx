@@ -4,8 +4,8 @@
 
 import { createBoard } from "@/action/create-board/index"; // 创建看板
 
-import { FormInput } from "./form-input";
-import { FormButton } from "./form-button";
+import { FormInput } from "@/components/form/form-input";
+import { FormSubmit } from "@/components/form/form-submit";
 
 import { useAction } from "@/hook/use-action"; // 处理异步操作，并管理操作的状态和错误处理。
 
@@ -28,9 +28,11 @@ export const Form = () => {
   return (
     <form action={onSubmit}>
       <div className="flex flex-col space-y-2">
-        <FormInput errors={fieldErrors} />
+        <FormInput label="Board Title" errors={fieldErrors} id={"title"} />
       </div>
-      <FormButton />
+      <FormSubmit>
+        保存
+      </FormSubmit>
     </form>
   )
 }
