@@ -6,7 +6,7 @@ interface FormErrorsProps {
 }
 
 export const FormErrors = ({ id, errors }: FormErrorsProps) => {
-	if (!errors) {
+	if (!errors) { // 如果errors对象不存在，则组件不渲染任何内容，直接返回null。
 		return null
 	}
 
