@@ -1,4 +1,4 @@
-import { XCircle } from "lucide-react";
+import { XCircle } from "lucide-react"; // 图标库
 
 interface FormErrorsProps {
 	id: string;
