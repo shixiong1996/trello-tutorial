@@ -1,3 +1,5 @@
+// Code: 组件FormErrors，用于显示表单验证错误信息。
+
 import { XCircle } from "lucide-react"; // 图标库
 
 interface FormErrorsProps {
@@ -12,7 +14,7 @@ export const FormErrors = ({ id, errors }: FormErrorsProps) => {
 
 	return <div
 		id={`${id}-error`}
-		aria-live="polite"
+		aria-live="polite" // 使用ARIA属性aria-live来增加可访问性，使屏幕阅读器可以适时地通知用户这个区域的变化，无障碍访问。
 		className="mt-2 text-xs text-rose-500"
 	>
 		{errors?.[id]?.map((error: string) => (
