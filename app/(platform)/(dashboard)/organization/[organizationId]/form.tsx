@@ -2,11 +2,11 @@
 
 'use client';
 
-import { FormInput } from "@/components/form/form-input"; // 表单输入框
-import { FormSubmit } from "@/components/form/form-submit"; // 表单提交按钮
-
 import { createBoard } from "@/action/create-board/index"; // 创建看板
 import { useAction } from "@/hook/use-action"; // 处理异步操作，并管理操作的状态和错误处理。
+
+import { FormInput } from "@/components/form/form-input"; // 表单输入框
+import { FormSubmit } from "@/components/form/form-submit"; // 表单提交按钮
 
 export const Form = () => {
   const { execute, fieldErrors } = useAction(createBoard, {
