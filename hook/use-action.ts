@@ -35,6 +35,8 @@ export const useAction = <TInput, TOutput>(
           return;
         }
 
+        setFieldErrors(result.fieldErrors);
+
         if (result.fieldErrors) { // 如果存在字段错误 (result.fieldErrors)，调用 setFieldErrors 更新 fieldErrors 状态。
           setFieldErrors(result.fieldErrors)
         }
