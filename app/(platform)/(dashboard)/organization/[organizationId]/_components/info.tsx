@@ -1,30 +1,28 @@
-'use client'
+"use client"
 
 import { Skeleton } from "@/components/ui/skeleton"
-import Image from "next/image"
-import { CreditCard } from "lucide-react"
 import { useOrganization } from "@clerk/nextjs"
+import { CreditCard } from "lucide-react"
+import Image from "next/image"
 
 export const Info = () => {
-  const { organization, isLoaded } = useOrganization()
 
-  if(!isLoaded) {
-    return (
-      <Info.Skeleton />
-    )
-  }
+	const { organization, isLoaded } = useOrganization()
 
-  return (
-    <div className="flex items-center gap-x-4">
-      <div className="w-[60px] h-[60px] relative">
-        <Image
-          fill
-          src={organization?.imageUrl!}
-          alt="Organization"
-          className="rounded-md object-cover"
-        />
-      </div>
-      <div className="space-y-1">
+	if (!isLoaded) {
+		return <Info.Skeleton />
+	}
+	return (
+		<div className="flex items-center gap-x-4">
+			<div className="w-[60px] h-[60px] relative">
+				<Image
+					fill
+					src={organization?.imageUrl!}
+					alt="organization"
+					className="rounded-md object-cover">
+				</Image>
+			</div>
+			<div className="space-y-1">
 				<p className="font-semibold text-xl">{
 					organization?.name}
 				</p>
@@ -33,8 +31,8 @@ export const Info = () => {
 					Free
 				</div>
 			</div>
-    </div>
-  )
+		</div >
+	)
 }
 
 Info.Skeleton = function SkeletonInfo() {
