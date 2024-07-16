@@ -1,5 +1,5 @@
 'use client'
-
+import { toast } from "sonner"
 import { X } from "lucide-react"
 import {
   Popover,
@@ -28,6 +28,23 @@ export const FormPopover = ({
   align,
   sideOffset = 0
 }: FormPopoverProps) => {
+  // 创建提交函数
+  const { execute, fieldErrors } = useAction(createBoard, {
+    onSuccess: (data) => {
+      console.log({ data })
+      toast.success("Board created!")
+    },
+    onError: (error) => {
+      console.log({ error })
+      toast.error(error)
+    }
+  })
+
+  const onSubmit = (formData: FormData) => {
+    const title = formData.get('title') as string
+    execute({ title})
+  }
+
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -50,6 +67,19 @@ export const FormPopover = ({
             <X className="h-4 w-4" />
           </Button>
         </PopoverClose>
+        <form action={onSubmit} className="space-y-4">
+          <div className="space-y-4">
+            <FormInput
+              id="title"
+              label="Board title"
+              type="text"
+              errors={fieldErrors}
+            />
+          </div>
+          <FormSubmit className="w-full">
+            Create board
+          </FormSubmit> 
+        </form>
       </PopoverContent>
     </Popover>
   )
