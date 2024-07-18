@@ -1,12 +1,15 @@
 "use client"
 
+import Link from "next/link";
+import Image from "next/image";
+import { Loader2 } from "lucide-react";
+import { Check } from "lucide-react";
+import { useFormStatus } from "react-dom";
 import { useEffect, useState } from "react";
 
-import { unsplash } from "@/lib/unsplash";
-import { Loader2 } from "lucide-react";
-import { useFormStatus } from "react-dom";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
+import { unsplash } from "@/lib/unsplash";
+import { defaultImages } from "@/constants/images";
 
 interface FormPickerProps {
   id: string;
@@ -19,7 +22,7 @@ export const FormPicker = ({
 }: FormPickerProps) => {
   const { pending } = useFormStatus()
 
-  const [images, setImages] = useState<Array<Record<string, any>>>([])
+  const [images, setImages] = useState<Array<Record<string, any>>>(defaultImages)
   const [isLoading, setIsLoading] = useState(true)
   const [selectedImageId, setSelectedImageId] = useState(null)
 
@@ -30,7 +33,6 @@ export const FormPicker = ({
           collectionIds: ["317099"],
           count: 9
         })
-
         if(result && result.response) {
           const newImages = (result.response as Array<Record<string, any>>)
           setImages(newImages)
@@ -39,6 +41,7 @@ export const FormPicker = ({
         }
       } catch (error) {
         console.log(error)
+        setImages(defaultImages)
       } finally {
         setIsLoading(false)
       }
@@ -75,7 +78,19 @@ export const FormPicker = ({
               alt="Unsplash image"
               className="object-cover rounded-none"
               fill
-            /> 
+              />
+              {selectedImageId === image.id && (
+                <div className="absolute inset-y-0 h-full w-full bg-black/30 flex items-center justify-center">
+                  <Check className="h-4 w-4 text-white"></Check>
+                </div>
+              )}
+            <Link
+              href={image.links.html}
+              target="_blank"
+              className="opacity-0 group-hover:opacity-100 absolute bottom-0 w-full text-[10px] truncate text-white hover:underline p-1 bg-black/50"
+            >
+              {image.user.name}
+            </Link>
           </div>
         ))}
       </div>
