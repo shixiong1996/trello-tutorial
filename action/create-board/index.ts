@@ -11,14 +11,28 @@ import { revalidatePath } from 'next/cache' // 重新验证某个路径的数据
 import { CreateBoard } from "./schema"; // 引入数据验证模式
 
 const handler = async ( data: InputType ): Promise<ReturnType> => {
-  const { userId } = auth() // 获取当前用户id
+  const { userId, orgId } = auth() // 获取当前用户id
 
-  if(!userId) { // 如果id不存在 表示未授权
+  if(!userId || !orgId) { // 如果id不存在 表示未授权
     return { error: '未授权' }
-  }
+  }  
 
   // 从输入数据中提取出title
-  const { title } = data
+  const { title, image } = data
+
+  const [
+    imageId,
+    imageThumbUrl,
+    imageFullUrl,
+    imageUserName,
+    imageLinkHTML
+  ] = image.split('|')
+
+  console.log({ imageId, imageThumbUrl, imageFullUrl, imageUserName, imageLinkHTML })
+
+  if(!imageId || !imageThumbUrl || !imageFullUrl || !imageUserName || !imageLinkHTML) {
+    return { error: '缺少字段，创建失败' }
+  }
 
   let board; // 用于存储创建的看板
 
@@ -27,6 +41,12 @@ const handler = async ( data: InputType ): Promise<ReturnType> => {
     board = await db.board.create({ // 创建看板 如果成功，将结果赋值给board。
       data: {
         title,
+        orgId,
+        imageId,
+        imageThumbUrl,
+        imageFullUrl,
+        imageUserName,
+        imageLinkHTML,
       }
     })
   } catch (error) { // 如果出现错误，返回一个错误消息。

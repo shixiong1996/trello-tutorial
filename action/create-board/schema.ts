@@ -11,5 +11,9 @@ export const CreateBoard = z.object({
     invalid_type_error: "title必须是字符串类型"
   }).min(3, {
     message: "标题至少需要3个字符"
+  }),
+  image: z.string({
+    required_error:"图片不能为空",
+    invalid_type_error:"图片不能为空"
   })
 })

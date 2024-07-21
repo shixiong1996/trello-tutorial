@@ -18,7 +18,7 @@ export const FormSubmit = ({
   children,
   disabled,
   className,
-  variant
+  variant = "primary"
 }: FormSubmitProps) => {
   const { pending } = useFormStatus() // 获取表单的状态，pending是一个布尔值，表示表单是否正在提交中。
 
