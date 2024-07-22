@@ -65,7 +65,7 @@ export const FormPopover = ({
         side={side}
         sideOffset={sideOffset}
       >
-        <div className="text-sm font-medium text-center text-neutral-600">
+        <div className="text-sm font-medium text-center text-neutral-600 pb-4">
           Create board
         </div>
         <PopoverClose ref={closeRef} asChild >
