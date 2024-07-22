@@ -1,6 +1,9 @@
 'use client'
+
+import { ElementRef, useRef } from "react"
 import { toast } from "sonner"
 import { X } from "lucide-react"
+import { useRouter } from "next/navigation"
 import {
   Popover,
   PopoverTrigger,
@@ -29,14 +32,17 @@ export const FormPopover = ({
   align,
   sideOffset = 0
 }: FormPopoverProps) => {
+  const router = useRouter()
+  const closeRef = useRef<ElementRef<"button">>(null)
+
   // 创建提交函数
   const { execute, fieldErrors } = useAction(createBoard, {
     onSuccess: (data) => {
-      console.log({ data })
       toast.success("Board created!")
+      closeRef.current?.click()
+      router.push(`/board/${data.id}`) // 跳转到新创建的看板页面
     },
     onError: (error) => {
-      console.log({ error })
       toast.error(error)
     }
   })
@@ -62,7 +68,7 @@ export const FormPopover = ({
         <div className="text-sm font-medium text-center text-neutral-600">
           Create board
         </div>
-        <PopoverClose asChild >
+        <PopoverClose ref={closeRef} asChild >
           <Button
             className="h-auto w-auto p-2 absolute top-2 right-2 text-neutral-600"
             variant="ghost"
