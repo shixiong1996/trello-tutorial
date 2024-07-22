@@ -21,9 +21,7 @@ export const OrgContol = () => {
   }, [setActive, params.organizationId])
 
   return (
-    <div>
-      
-    </div>
+    null
   )
 }
 
