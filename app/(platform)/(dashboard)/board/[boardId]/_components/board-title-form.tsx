@@ -30,9 +30,14 @@ export const BoardTitleForm = ({
     setIsEditing(false)
   }
 
+  const onSubmit = (formData: FormData) => {
+    const title = formData.get('title') as string
+    console.log('I am submitted' + title)
+  }
+
   if(isEditing) {
     return (
-      <form ref={formRef} className="flex items-center gpa-x-2">
+      <form action={onSubmit} ref={formRef} className="flex items-center gpa-x-2">
         <FormInput 
           ref={inputRef}
           id="title"
