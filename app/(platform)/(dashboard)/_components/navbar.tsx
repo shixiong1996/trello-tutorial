@@ -6,7 +6,7 @@ import { OrganizationSwitcher, UserButton } from "@clerk/nextjs" // 组织切换
 
 import { MobileSidebar } from "./mobile-sidebar" // 移动侧边栏
 
-export const Navbar = () => {
+const Navbar = () => {
   return (
     <nav className="fixed z-50 top-0 px-4 w-full h-14 border-b shadow-sm bg-white flex items-center">
       <MobileSidebar/>
@@ -52,3 +52,5 @@ export const Navbar = () => {
     </nav>
   )
 }
+
+export default Navbar
