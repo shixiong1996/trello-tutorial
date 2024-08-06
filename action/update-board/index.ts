@@ -19,7 +19,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
   }
 
   const { title, id } = data
-  let board
+  let board // 存储更新后的板块数据
 
   try {
     board = await db.board.update({
@@ -38,7 +38,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
   }
 
   revalidatePath(`/board/${id}`) // 重新验证路径
-  return { data: board }
+  return { data: board } // 返回更新后的整个板块数据
 }
 
 export const updateBoard = createSafeAction(UpdateBoard, handler)
