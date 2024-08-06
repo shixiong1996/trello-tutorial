@@ -41,4 +41,5 @@ const handler = async (data: InputType): Promise<ReturnType> => {
   return { data: board } // 返回更新后的整个板块数据
 }
 
+// 确保在执行更新操作时进行必要的安全检查
 export const updateBoard = createSafeAction(UpdateBoard, handler)

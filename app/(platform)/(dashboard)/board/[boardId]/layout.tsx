@@ -27,7 +27,6 @@ export async function generateMetadata({
   return {
     title: board?.title || "Board"
   }
-
 }
 
 const BoardIdLayout = async ({
