@@ -35,6 +35,8 @@ export const BoardTitleForm = ({
     console.log('I am submitted' + title)
   }
 
+  // onBlur 事件会在元素失去焦点时触发
+  // requestSubmit() 表单的内容会被验证并且表单仅在验证通过时提交
   const onBlur = () => {
     formRef.current?.requestSubmit()
   }
@@ -42,7 +44,7 @@ export const BoardTitleForm = ({
   if(isEditing) {
     return (
       <form action={onSubmit} ref={formRef} className="flex items-center gpa-x-2">
-        <FormInput 
+        <FormInput
           ref={inputRef}
           id="title"
           onBlur={onBlur}
