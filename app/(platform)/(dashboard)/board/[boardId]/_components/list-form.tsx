@@ -1,31 +1,36 @@
 "use client"
 
-import { Plus } from "lucide-react"
+import { Plus, X } from "lucide-react"
 import { useState, useRef, ElementRef } from "react"
+import { useParams } from "next/navigation"
 import { useEventListener, useOnClickOutside } from "usehooks-ts"
 
 import { FormInput } from "@/components/form/form-input"
+import { FormSubmit } from "@/components/form/form-submit"
+import { Button } from "@/components/ui/button"
 
 import { ListWrapper } from "./list-wrapper"
 
 export const ListForm = () => {
+  const params = useParams()
+
   const inputRef = useRef<ElementRef<"input">>(null)
   const formRef = useRef<ElementRef<"form">>(null)
   
   const [isEditing, setIsEditing] = useState(false)
 
-  const enableEditing = () => {
+  const enableEditing = () => { // 用于开启编辑状态
     setIsEditing(true)
     setTimeout(() => {
       inputRef.current?.focus()
     })
   }
 
-  const disableEditing = () => {
+  const disableEditing = () => { // 用于关闭编辑状态
     setIsEditing(false)
   }
 
-  const onKeyDown = (e: KeyboardEvent) => {
+  const onKeyDown = (e: KeyboardEvent) => { // 用于监听键盘按键
     if(e.key === "Escape") {
       disableEditing()
     }
@@ -49,6 +54,23 @@ export const ListForm = () => {
             className="text-sm px-2 py-1 h-7 font-medium border-transparent hover:border-input focus:border-input transition"
             placeholder="输入列表标题"
           />
+          <input
+            hidden
+            value={params.boardId}
+            name="boardId"
+          />
+          <div className="flex items-center gap-x-1">
+            <FormSubmit>
+              Add List
+            </FormSubmit>
+            <Button
+              onClick={disableEditing}
+              size="sm"
+              variant="ghost"
+            >
+              <X className="h-5 w-5"/>
+            </Button>
+          </div>
         </form>
       </ListWrapper>
     )
