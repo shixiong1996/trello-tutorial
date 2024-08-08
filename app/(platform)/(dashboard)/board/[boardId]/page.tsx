@@ -19,9 +19,9 @@ const BoardIdPage = async ({
     redirect("/select-org")
   }
 
-  const lists = await db.list.findMany({
+  const lists = await db.list.findMany({ // 查找多个列表
     where: {
-      boardId: params.boardId,
+      boardId: params.boardId, // 当前页面的动态路由参数
       board: {
         orgId,
       }
