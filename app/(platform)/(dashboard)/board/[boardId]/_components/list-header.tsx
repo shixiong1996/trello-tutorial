@@ -87,7 +87,6 @@ export const ListHeader = ({
             defaultValue={title}
             className="text-sm px-[7px] py-1 h-7 font-medium border-transparent hover:board-input focus:boarder-input focus:border-input transition truncate bg-transparent focus:bg-white"
           />
-          {/* 疑问？ */}
           <button type="submit" hidden /> 
         </form>
       ) : (
