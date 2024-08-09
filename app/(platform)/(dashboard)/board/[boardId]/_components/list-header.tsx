@@ -9,7 +9,6 @@ import { useAction } from "@/hook/use-action"
 import { updateList } from "@/action/update-list"
 import { FormInput } from "@/components/form/form-input"
 
-
 interface ListHeaderProps {
   data: List
 }
