@@ -38,11 +38,11 @@ export const ListItem = ({
         data={data}
       />
       <CardForm
-        listId={data.id}
         ref={textareaRef}
-        isEditing={isEditing}
+        listId={data.id}
         enableEditing={enableEditing}
         disableEditing={disableEditing}
+        isEditing={isEditing}
       />
       </div>
     </li>
