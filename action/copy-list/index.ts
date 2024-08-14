@@ -7,7 +7,7 @@ import { revalidatePath } from "next/cache"
 import { db } from "@/lib/db"
 import { createSafeAction } from "@/lib/create-safe-action"
 
-import { DeleteList } from "./schema"
+import { CopyList } from "./schema"
 import { InputType, ReturnType } from "./types"
 
 const handler = async (data: InputType): Promise<ReturnType> => {
@@ -23,18 +23,55 @@ const handler = async (data: InputType): Promise<ReturnType> => {
   let list // 存储更新后的板块数据
 
   try {
-    list = await db.list.delete({
+    const listToCopy = await db.list.findUnique({
       where: {
         id,
         boardId,
         board: {
           orgId
         }
+      },
+      include: {
+        cards: true
+      }
+    })
+
+    if(!listToCopy) {
+      return {
+        error: "未找到列表"
+      }
+    }
+
+    const lastList = await db.list.findFirst({
+      where: { boardId },
+      orderBy: { order: 'desc' },
+      select: { order: true }
+    })
+
+    const newOrder = lastList ? lastList.order + 1 : 1
+
+    list = await db.list.create({
+      data: {
+        boardId: listToCopy.boardId,
+        title: `${listToCopy.title} - Copy`,
+        order: newOrder,
+        cards: {
+          createMany: {
+            data: listToCopy.cards.map((card) => ({
+              title: card.title,
+              description: card.description,
+              order: card.order
+            }))
+          }
+        }
+      },
+      include: {
+        cards: true
       }
     })
   } catch(error) {
     return {
-      error: "删除失败"
+      error: "无法复制"
     }
   }
 
@@ -43,4 +80,4 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 }
 
 // 确保在执行更新操作时进行必要的安全检查
-export const deleteList = createSafeAction(DeleteList, handler)
+export const copyList = createSafeAction(CopyList, handler)
