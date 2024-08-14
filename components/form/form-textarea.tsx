@@ -8,8 +8,6 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { FormErrors } from "./form-errors"
 
-
-
 interface FormTextareaProps {
   id: string
   label?: string
@@ -56,10 +54,10 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>((
           onClick={onClick}
           ref={ref}
           required={required}
-          placeholder={pending || placeholder}
+          placeholder={placeholder}
           name={id}
           id={id}
-          disabled={disabled}
+          disabled={pending || disabled}
           className={cn("resize-none focus-visible:ring-0 focus-visible:ring-offset-0 ring-0 focus:ring-0 outline-none shadow-sm", className)}
           aria-describedby={`${id}-error`}
           defaultValue={defaultValue}
