@@ -1,8 +1,14 @@
 "use client"
 
-import { forwardRef } from "react"; // forwardRef 允许组件使用 ref 将 DOM 节点暴露给父组件。
+// forwardRef 允许组件使用 ref 将 DOM 节点暴露给父组件。
+import { toast } from "sonner";
 import { Plus, X } from "lucide-react";
+import { forwardRef, useRef, ElementRef, KeyboardEventHandler } from "react";
+import { useParams } from "next/navigation";
+import { useOnClickOutside, useEventListener } from "usehooks-ts";
 
+import { useAction } from "@/hook/use-action";
+import { createCard } from "@/action/create-card";
 import { Button } from "@/components/ui/button";
 import { FormTextarea } from "@/components/form/form-textarea";
 import { FormSubmit } from "@/components/form/form-submit";
@@ -20,14 +26,48 @@ export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(({
   disableEditing,
   isEditing
 }, ref) => {
+  const params = useParams();
+  const formRef = useRef<ElementRef<"form">>(null)
+
+  const { execute, fieldErrors } = useAction(createCard)
+
+  const onKeyDown = (e: KeyboardEvent) => {
+    if(e.key === "Escape") {
+      disableEditing()
+    }
+  }
+
+  useOnClickOutside(formRef, disableEditing)
+  useEventListener("keydown", onKeyDown)
+
+  const onTextareakeyDown: KeyboardEventHandler<HTMLTextAreaElement> = (e) => {
+    if(e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault()
+      formRef.current?.requestSubmit()
+    }
+  }
+
+  const onSubmit = (formData: FormData) => {
+    const title = formData.get("title") as string
+    const listId = formData.get("listId") as string
+    const boardId = formData.get("boardId") as string
+
+    execute({ title, listId, boardId })
+  }
+
   if(isEditing) {
     return (
-      <form className="m-1 py-0.5 px-1 space-y-4">
+      <form
+        ref={formRef}
+        action={onSubmit}
+        className="m-1 py-0.5 px-1 space-y-4"
+      >
         <FormTextarea
           id="title"
-          onKeyDown={() => {}}
+          onKeyDown={onTextareakeyDown}
           ref={ref}
           placeholder="为这张卡片添加标题"
+          errors={fieldErrors}
         />
         <input
           hidden
