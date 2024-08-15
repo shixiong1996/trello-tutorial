@@ -29,7 +29,15 @@ export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(({
   const params = useParams();
   const formRef = useRef<ElementRef<"form">>(null)
 
-  const { execute, fieldErrors } = useAction(createCard)
+  const { execute, fieldErrors } = useAction(createCard, {
+    onSuccess: (data) => {
+      toast.success(`Card "${data.title}" created`)
+      formRef.current?.reset()
+    },
+    onError: (error) => {
+      toast.error(error)
+    }
+  })
 
   const onKeyDown = (e: KeyboardEvent) => {
     if(e.key === "Escape") {
