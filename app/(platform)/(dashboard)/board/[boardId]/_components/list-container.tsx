@@ -1,9 +1,12 @@
 "use client"
 
+import { toast } from "sonner";
 import { useEffect, useState } from "react";
 import { DragDropContext, Droppable } from "@hello-pangea/dnd"
 
+import { useAction } from "@/hook/use-action";
 import { ListWithCards } from "@/types";
+import { updateListOrder } from "@/action/update-list-order";
 
 import { ListForm } from "./list-form";
 import { ListItem } from "./list-item";
@@ -27,6 +30,15 @@ export const ListContainer = ({
   boardId
 }: ListContainerProps) => {
   const [orderedData, setOrderedData] = useState(data);
+
+  const { execute: excuteUpdateListOrder } = useAction(updateListOrder, {
+    onSuccess: () => {
+      toast.success("重新排序列表")
+    },
+    onError: (error) => {
+      toast.error(error)
+    }
+  })
 
   useEffect(() => {
     setOrderedData(data);
@@ -53,11 +65,12 @@ export const ListContainer = ({
         orderedData,
         source.index,
         destination.index,
-      ).map((list, index) => ({ ...list, order: index }))
+      ).map((item, index) => ({ ...item, order: index }));
 
-      setOrderedData(items)
+      setOrderedData(items);
 
-      // 更新数据库
+      // 更新数据库 
+      excuteUpdateListOrder({ items, boardId });
     }
 
     // 用户移动卡片
@@ -100,6 +113,29 @@ export const ListContainer = ({
         setOrderedData(newOrderedData)
 
         // 更新数据库
+        // 用户将卡片移动到另一个列表
+      } else {
+        // 从源列表删除卡
+        const [moveCard] = sourceList.cards.splice(source.index, 1)
+
+        // 将新的List附加到新的卡片
+        moveCard.listId = destination.droppableId;
+
+        // 添加卡片到目标列表
+        destList.cards.splice(destination.index, 0, moveCard);
+
+        sourceList.cards.forEach((card, idx) => {
+          card.order = idx
+        })
+
+        // 更新目标列表每张卡片的顺序
+        destList.cards.forEach((card, idx) => {
+          card.order = idx
+        })
+
+        setOrderedData(newOrderedData)
+
+        // 更新
       }
     }  
   }
