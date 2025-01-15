@@ -7,6 +7,7 @@ import { DragDropContext, Droppable } from "@hello-pangea/dnd"
 import { useAction } from "@/hook/use-action";
 import { ListWithCards } from "@/types";
 import { updateListOrder } from "@/action/update-list-order";
+import { updateCardOrder } from "@/action/update-card-order";
 
 import { ListForm } from "./list-form";
 import { ListItem } from "./list-item";
@@ -34,6 +35,15 @@ export const ListContainer = ({
   const { execute: excuteUpdateListOrder } = useAction(updateListOrder, {
     onSuccess: () => {
       toast.success("重新排序列表")
+    },
+    onError: (error) => {
+      toast.error(error)
+    }
+  })
+
+  const { execute: excuteUpdateCardOrder } = useAction(updateCardOrder, {
+    onSuccess: () => {
+      toast.success("重新排序卡片")
     },
     onError: (error) => {
       toast.error(error)
@@ -111,7 +121,10 @@ export const ListContainer = ({
         sourceList.cards = reorderedCards;
 
         setOrderedData(newOrderedData)
-
+        excuteUpdateCardOrder({ 
+          boardId: boardId,
+          items: reorderedCards
+        })
         // 更新数据库
         // 用户将卡片移动到另一个列表
       } else {
@@ -134,8 +147,11 @@ export const ListContainer = ({
         })
 
         setOrderedData(newOrderedData)
-
         // 更新
+        excuteUpdateCardOrder({
+          boardId: boardId,
+          items: destList.cards
+        })
       }
     }  
   }
